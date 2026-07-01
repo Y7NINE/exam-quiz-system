@@ -56,7 +56,3 @@ exam-quiz-system/
 2. 进入仓库 Settings → Pages
 3. 选择 `main` 分支，点击 Save
 4. 等待部署完成即可访问
-
-## 许可证
-
-MIT
