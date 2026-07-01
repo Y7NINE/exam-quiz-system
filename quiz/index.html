@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAA海鲜批发老王刷题</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: #faf9f7;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative shapes */
+        .deco {
+            position: fixed;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .deco-1 { width: 400px; height: 400px; top: -120px; right: -100px; background: linear-gradient(135deg, #dbeafe, #ede9fe); opacity: 0.6; }
+        .deco-2 { width: 300px; height: 300px; bottom: -80px; left: -60px; background: linear-gradient(135deg, #fce7f3, #fef3c7); opacity: 0.5; }
+        .deco-3 { width: 180px; height: 180px; top: 40%; right: 10%; background: linear-gradient(135deg, #d1fae5, #dbeafe); opacity: 0.4; }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Header badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 100px;
+            padding: 8px 18px 8px 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 28px;
+            width: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .badge-dot {
+            width: 8px; height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Title */
+        .title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+        .title .emoji { font-size: 2.8rem; }
+        .title .gradient {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        /* Cards */
+        .cards { display: flex; flex-direction: column; gap: 16px; }
+
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 28px 32px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--c);
+            border-radius: 0 4px 4px 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            border-color: transparent;
+        }
+        .card:hover::after { opacity: 1; }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            background: var(--bg);
+        }
+
+        .card-body { flex: 1; min-width: 0; }
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .card-desc {
+            font-size: 0.82rem;
+            color: #999;
+            line-height: 1.5;
+        }
+
+        .card-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .card-count {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--c);
+            line-height: 1;
+        }
+        .card-count-label {
+            font-size: 0.72rem;
+            color: #bbb;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-go {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #aaa;
+            transition: all 0.3s;
+        }
+        .card:hover .card-go {
+            background: var(--c);
+            color: white;
+            transform: translateX(2px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+        .footer-left {
+            font-size: 0.78rem;
+            color: #ccc;
+        }
+        .footer-right {
+            display: flex;
+            gap: 6px;
+        }
+        .footer-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+        .footer-dot:nth-child(1) { background: #2563eb; }
+        .footer-dot:nth-child(2) { background: #8b5cf6; }
+
+        @media (max-width: 600px) {
+            .container { padding: 48px 16px 40px; }
+            .title { font-size: 2rem; }
+            .card { padding: 20px; gap: 16px; }
+            .card-icon { width: 52px; height: 52px; font-size: 1.6rem; }
+            .card-count { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="deco deco-3"></div>
+
+    <div class="container">
+        <div class="badge">
+            <span class="badge-dot"></span>
+            在线题库 · 随时刷题
+        </div>
+
+        <h1 class="title">
+            <span class="emoji">🐟</span><br>
+            <span class="gradient">AAA海鲜批发</span><br>老王刷题
+        </h1>
+        <p class="subtitle">软件系统分析与体系结构设计 · 软件项目管理</p>
+
+        <div class="cards">
+            <a class="card" href="software_analysis.html" style="--c: #2563eb; --bg: linear-gradient(135deg, #eff6ff, #dbeafe);">
+                <div class="card-icon">📘</div>
+                <div class="card-body">
+                    <div class="card-title">软件系统分析与体系结构设计</div>
+                    <div class="card-desc">8个章节 · 软件工程概述 / 需求分析 / UML面向对象 / 用例分析 / 类图 / 动态建模 / 实现建模 / 设计模式</div>
+                </div>
+                <div class="card-right">
+                    <div class="card-count">193</div>
+                    <div class="card-count-label">道题</div>
+                    <div class="card-go">→</div>
+                </div>
+            </a>
+
+            <a class="card" href="software_project_management.html" style="--c: #7c3aed; --bg: linear-gradient(135deg, #f5f3ff, #ede9fe);">
+                <div class="card-icon">📋</div>
+                <div class="card-body">
+                    <div class="card-title">软件项目管理</div>
+                    <div class="card-desc">1个章节 · 项目管理基础 / 估算与计划 / 进度管理 / 质量管理 / 风险管理 / 沟通与团队</div>
+                </div>
+                <div class="card-right">
+                    <div class="card-count">220</div>
+                    <div class="card-count-label">道题</div>
+                    <div class="card-go">→</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <div class="footer-left">AAA海鲜批发老王刷题 © 2026</div>
+            <div class="footer-right">
+                <span class="footer-dot"></span>
+                <span class="footer-dot"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

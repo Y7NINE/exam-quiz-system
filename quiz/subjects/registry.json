@@ -1,0 +1,15 @@
+[
+  {
+    "id": "software_analysis",
+    "name": "软件系统分析与体系结构设计",
+    "icon": "🐟",
+    "file": "software_analysis.json",
+    "default": true
+  },
+  {
+    "id": "software_project_management",
+    "name": "软件项目管理",
+    "icon": "📋",
+    "file": "software_project_management.json"
+  }
+]
